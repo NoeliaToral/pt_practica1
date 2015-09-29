@@ -91,7 +91,14 @@ main()
 		
 		enviados=send(nuevosockfd,buffer_out,(int)strlen(buffer_out),0);
 		//TODO Comprobar error de envío
- 
+		if (enviados==0){
+				printf("SERVIDOR> Conexion liberada correctamente\r\n");
+				return 0;
+			}
+			else if (enviados==SOCKET_ERROR){
+				printf("SERVIDOR> Error en el envio ");
+				return (-6);
+			}
 		//Se reestablece el estado inicial
 		estado = S_USER;
 		fin_conexion = 0;
@@ -102,7 +109,14 @@ main()
 			//Se espera un comando del cliente
 			recibidos = recv(nuevosockfd,buffer_in,1023,0);
 			//TODO Comprobar posible error de recepción
-			
+			if (recibidos==0){
+				printf("SERVIDOR> Conexion liberada correctamente\r\n");
+				return 0;
+			}
+			else if (recibidos==SOCKET_ERROR){
+				printf("SERVIDOR> Error en la recepcion ");
+				return(-7);
+			}
 			buffer_in[recibidos] = 0x00;
 			printf ("SERVIDOR [bytes recibidos]> %d\r\nSERVIDOR [datos recibidos]>%s", recibidos, buffer_in);
 			
@@ -199,7 +213,14 @@ main()
 
 			enviados=send(nuevosockfd,buffer_out,(int)strlen(buffer_out),0);
 			//TODO 
-
+			if (enviados==0){
+				printf("SERVIDOR> Conexion liberada correctamente\r\n");
+				return 0;
+			}
+			else if (enviados==SOCKET_ERROR){
+				printf("SERVIDOR> Error en el envio ");
+				return (-6);
+			}
 
 		} while (!fin_conexion);
 		printf ("SERVIDOR> CERRANDO CONEXION DE TRANSPORTE\r\n");
