@@ -17,7 +17,6 @@ Autor: Juan Carlos Cuevas Martínez
 #include <string.h>
 #include <conio.h>
 #include <Winsock2.h>
-
 #include "protocol.h"
 
 
@@ -88,7 +87,6 @@ main()
 
 		//Mensaje de Bienvenida
 		sprintf_s (buffer_out, sizeof(buffer_out), "%s Bienvenindo al servidor de ECO%s",OK,CRLF);
-		
 		enviados=send(nuevosockfd,buffer_out,(int)strlen(buffer_out),0);
 		//TODO Comprobar error de envío
 		if (enviados==0){
@@ -96,8 +94,8 @@ main()
 				return 0;
 			}
 			else if (enviados==SOCKET_ERROR){
-				printf("SERVIDOR> Error en el envio ");
-				return (-6);
+				printf("SERVIDOR> ERROR EN EL ENVIO\r\n");
+				continue;
 			}
 		//Se reestablece el estado inicial
 		estado = S_USER;
@@ -110,12 +108,12 @@ main()
 			recibidos = recv(nuevosockfd,buffer_in,1023,0);
 			//TODO Comprobar posible error de recepción
 			if (recibidos==0){
-				printf("SERVIDOR> Conexion liberada correctamente\r\n");
+				printf("SERVIDOR> CONEXION LIBERADA CORRECTAMENTE\r\n");
 				return 0;
 			}
 			else if (recibidos==SOCKET_ERROR){
-				printf("SERVIDOR> Error en la recepcion ");
-				return(-7);
+				printf("SERVIDOR> ERROR EN LA RECEPCION\r\n");
+				break;
 			}
 			buffer_in[recibidos] = 0x00;
 			printf ("SERVIDOR [bytes recibidos]> %d\r\nSERVIDOR [datos recibidos]>%s", recibidos, buffer_in);
@@ -210,16 +208,16 @@ main()
 					break;
 					
 			} // switch
-
 			enviados=send(nuevosockfd,buffer_out,(int)strlen(buffer_out),0);
-			//TODO 
+			//TODO
+			
 			if (enviados==0){
-				printf("SERVIDOR> Conexion liberada correctamente\r\n");
+				printf("SERVIDOR> CONEXION LIBERADA CORRECTAMENTE\r\n");
 				return 0;
 			}
 			else if (enviados==SOCKET_ERROR){
-				printf("SERVIDOR> Error en el envio ");
-				return (-6);
+				printf("SERVIDOR> ERROR EN EL ENVIO\r\n");
+				break;
 			}
 
 		} while (!fin_conexion);
