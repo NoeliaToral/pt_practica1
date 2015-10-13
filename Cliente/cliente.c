@@ -28,7 +28,7 @@ int main(int *argc, char *argv[])
 {
 	SOCKET sockfd;
 	struct sockaddr_in server_in;
-	char buffer_in[1024], buffer_out[1024],input[1024];
+	char buffer_in[1024], buffer_out[1024],input[1024],NUM1[4],NUM2[4];
 	int recibidos=0,enviados=0;
 	int estado=S_HELO;
 	char option;
@@ -124,10 +124,22 @@ int main(int *argc, char *argv[])
 							sprintf_s (buffer_out, sizeof(buffer_out), "%s%s",SD,CRLF);
 							estado=S_QUIT;
 						}
-						else
-							sprintf_s (buffer_out, sizeof(buffer_out), "%s%s",input,CRLF);
+						else{
+							if (strncmp(input,SUM,3)==0){
+							//sprintf_s (buffer_out, sizeof(buffer_out), "%s%s",input,CRLF);
+							printf("hola");
+							estado = S_SUM;
+							}
+						}
 						break;
-				 
+					case S_SUM:
+						printf("introduce el primer numero: ");
+						gets(NUM1);
+						printf("introduce el segundo numero: ");
+						gets(NUM2);
+						sprintf_s(buffer_out,sizeof(buffer_out),"SUM %s %s %s",NUM1,NUM2,CRLF);
+						estado=S_DATA;
+						break;
 				
 					}
 					//Envio

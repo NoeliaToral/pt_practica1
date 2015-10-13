@@ -6,6 +6,7 @@
 #define SC "USER"  // SOLICITUD DE CONEXION USER usuario 
 #define PW "PASS"  // Password del usuario  PASS password
 
+#define SUM "SUM"
 #define SD  "QUIT"  // Finalizacion de la conexion de aplicacion
 #define SD2 "EXIT"  // Finalizacion de la conexion de aplicacion y finaliza servidor
 
@@ -23,6 +24,7 @@
 #define S_DATA 3
 #define S_QUIT 4
 #define S_EXIT 5
+#define S_SUM  6
 
 //PUERTO DEL SERVICIO
 #define TCP_SERVICE_PORT	6000

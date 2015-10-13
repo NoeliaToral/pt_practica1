@@ -29,7 +29,7 @@ main()
 	WSADATA wsaData;
 	SOCKET sockfd,nuevosockfd;
 	struct sockaddr_in  local_addr,remote_addr;
-	char buffer_out[1024],buffer_in[1024], cmd[10], usr[10], pas[10];
+	char buffer_out[1024],buffer_in[1024], cmd[10], usr[10], pas[10],NUM1[4],NUM2[4];
 	int err,tamanio;
 	int fin=0, fin_conexion=0;
 	int recibidos=0,enviados=0;
@@ -153,7 +153,7 @@ main()
 
 					if ( strcmp(cmd,PW)==0 ) // si comando recibido es password
 					{
-						sscanf_s (buffer_in,"PASS %s\r\n",pas,sizeof(usr));
+						sscanf_s (buffer_in,"PASS %s\r\n",pas,sizeof(pas));
 
 						if ( (strcmp(usr,USER)==0) && (strcmp(pas,PASSWORD)==0) ) // si password recibido es correcto
 						{
@@ -184,9 +184,12 @@ main()
 					buffer_in[recibidos] = 0x00;
 					
 					strncpy_s(cmd,sizeof(cmd), buffer_in, 4);
-
+					cmd[4]=0x00;
 					printf ("SERVIDOR [Comando]>%s\r\n",cmd);
-					
+					if ( strncmp(cmd,SUM,3)==0){
+						sscanf_s(buffer_in,"SUM %s %s\r\n",NUM1,NUM2,sizeof(NUM1),sizeof(NUM2));
+						printf("%s",NUM1);
+					}
 					if ( strcmp(cmd,SD)==0 )
 					{
 						sprintf_s (buffer_out, sizeof(buffer_out), "%s Fin de la conexión%s", OK,CRLF);
@@ -203,7 +206,7 @@ main()
 						sprintf_s (buffer_out, sizeof(buffer_out), "%s Comando incorrecto%s",ER,CRLF);
 					}
 					break;
-
+				
 				default:
 					break;
 					
