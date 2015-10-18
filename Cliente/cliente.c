@@ -181,6 +181,14 @@ int main(int *argc, char *argv[])
 					// Ejercicio: Comprobar el estado de envio
 						
 						enviados=send(sockfd,buffer_out,(int)strlen(buffer_out),0);
+						
+					if (enviados<0){
+						DWORD error=GetLastError();
+						
+							printf("CLIENTE> Error %d en el envio de datos%s",error,CRLF);
+							estado=S_QUIT;
+					}
+
 
 					//Recibo
 					recibidos=recv(sockfd,buffer_in,512,0);
