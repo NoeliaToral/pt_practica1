@@ -214,7 +214,7 @@ main()
 						NUMi1 = atoi(NUM1);	// string to int 
 						NUMi2 = atoi(NUM2); // string to int
 						SUMA = NUMi1+NUMi2;	// suma de los dos numeros
-						sprintf_s(buffer_out, sizeof(buffer_out), "%s %i %s",OK,SUMA,CRLF);	//Formato de envio del resultado
+						sprintf_s(buffer_out, sizeof(buffer_out), "%s %i%s",OK,SUMA,CRLF);	//Formato de envio del resultado
 					}
 
 					//Comando HELP

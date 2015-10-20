@@ -17,7 +17,6 @@ Autor: Juan Carlos Cuevas Martínez, Emilio Sánchez Catalán, Noelia Toral Jimenez
 #include <winsock.h>
 #include <time.h>
 #include <conio.h>
-
 #include "protocol.h"
 
 
@@ -215,7 +214,7 @@ int main(int *argc, char *argv[])
 						
 						//Presentacion de la Solucion de la suma
 						if (strncmp(input,SUM,3)==0){
-							sscanf_s(buffer_in,"OK %s",SOL,sizeof(SOL));
+							sscanf_s(buffer_in,"OK %s\r\n",SOL,sizeof(SOL));
 							printf("CLIENTE> Resultado = %s%s",SOL,CRLF);
 						}
 
