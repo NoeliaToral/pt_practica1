@@ -210,11 +210,18 @@ main()
 					//Comando SUM
 					if ( strncmp(cmd,SUM,3)==0){
 						int NUMi1,NUMi2,SUMA;
+						char NUMc1[5],NUMc2[5];
 						sscanf_s(buffer_in,"SUM %s %s\r\n",NUM1,sizeof(NUM1),NUM2,sizeof(NUM2));  //Escaneo de los dos numeros 
-						NUMi1 = atoi(NUM1);	// string to int 
+						NUMi1 = atoi(NUM1);	// string to int
 						NUMi2 = atoi(NUM2); // string to int
 						SUMA = NUMi1+NUMi2;	// suma de los dos numeros
-						sprintf_s(buffer_out, sizeof(buffer_out), "%s %i%s",OK,SUMA,CRLF);	//Formato de envio del resultado
+						sprintf_s(NUMc1,sizeof(NUMc1),"%i",NUMi1);
+						sprintf_s(NUMc2,sizeof(NUMc2),"%i",NUMi2);
+						if (strcmp(NUMc1,NUM1)==0 && strcmp(NUMc2,NUM2)==0){
+							sprintf_s(buffer_out, sizeof(buffer_out), "%s %i%s",OK,SUMA,CRLF);
+						}
+						
+						else sprintf_s(buffer_out,sizeof(buffer_out),"CLIENTE> %s formato de los numeros incorrecto%s",ER,CRLF);	//Formato de envio del resultado
 					}
 
 					//Comando HELP

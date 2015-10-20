@@ -80,6 +80,7 @@ int main(int *argc, char *argv[])
 			server_in.sin_port=htons(TCP_SERVICE_PORT);		//Puerto Que vamos a usar
 			server_in.sin_addr.s_addr=inet_addr(ipdest);	//IP del servidor
 			
+			enviados=0;
 			estado=S_HELO;	//Estado inicial de saludo
 		
 			// establece la conexion de transporte
@@ -176,16 +177,16 @@ int main(int *argc, char *argv[])
 					}
 
 					//Envio
-					if(estado!=S_HELO)
+					if(estado!=S_HELO){
 					// Ejercicio: Comprobar el estado de envio
 						
 						enviados=send(sockfd,buffer_out,(int)strlen(buffer_out),0);
-						
+					}
 					if (enviados<0){
 						DWORD error=GetLastError();
 						
 							printf("CLIENTE> Error %d en el envio de datos%s",error,CRLF);
-							estado=S_QUIT;
+							break;
 					}
 
 
@@ -213,11 +214,10 @@ int main(int *argc, char *argv[])
 						buffer_in[recibidos]=0x00;
 						
 						//Presentacion de la Solucion de la suma
-						if (strncmp(input,SUM,3)==0){
+						if (strncmp(input,SUM,3)==0 && strncmp(buffer_in,"OK",2)==0){
 							sscanf_s(buffer_in,"OK %s\r\n",SOL,sizeof(SOL));
 							printf("CLIENTE> Resultado = %s%s",SOL,CRLF);
 						}
-
 						//Presentacion del resto de datos recibidos
 						else printf(buffer_in);
 
@@ -238,6 +238,8 @@ int main(int *argc, char *argv[])
 					}
 
 				}while(estado!=S_QUIT);
+			
+			
 			}
 			else	//Error al Conectar
 			{
@@ -246,7 +248,8 @@ int main(int *argc, char *argv[])
 			// fin de la conexion de transporte
 			closesocket(sockfd);
 			
-		}	
+		}
+		estado =S_HELO;
 		printf("-----------------------\r\n\r\nCLIENTE> Volver a conectar (S/N)\r\n");
 		option=_getche();	//realizar otra conexión
 
